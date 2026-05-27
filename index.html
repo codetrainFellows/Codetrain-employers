@@ -1,793 +1,2310 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Codetrain — AI Engineering & Delivery</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --navy:#1B1049;
-  --navy2:#130C38;
-  --navy3:#0D0826;
-  --gold:#FFBE0C;
-  --gold2:#C89600;
-  --gold-lt:#FFFBE8;
-  --cream:#F8F7FF;
-  --white:#FFFFFF;
-  --ink:#1B1049;
-  --muted:#6B6882;
-  --border:rgba(27,16,73,.12);
-  --mid:#F2F1FB;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codetrain — AI Engineering & Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1B1049;
+      --navy2: #130C38;
+      --navy3: #0D0826;
+      --gold: #FFBE0C;
+      --gold2: #C89600;
+      --gold-lt: #FFFBE8;
+      --cream: #F8F7FF;
+      --white: #FFFFFF;
+      --ink: #1B1049;
+      --muted: #6B6882;
+      --border: rgba(27, 16, 73, .12);
+      --mid: #F2F1FB;
+    }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 6vw;background:rgba(248,247,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.logo{display:flex;align-items:center;gap:.55rem;font-size:1.05rem;font-weight:700;color:var(--navy);text-decoration:none;letter-spacing:-.01em}
-.logo-mark{width:24px;height:24px;background:var(--navy);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-mark span{width:10px;height:10px;background:var(--gold);border-radius:1px;display:block}
-.nav-right{display:flex;align-items:center;gap:2rem}
-.nav-links{display:flex;gap:1.75rem}
-.nav-links a{font-size:.82rem;font-weight:400;color:var(--muted);text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(--navy)}
-.nav-cta{background:var(--navy);color:var(--white);padding:.55rem 1.4rem;border-radius:2px;font-weight:700;font-size:.82rem;text-decoration:none;transition:background .2s}
-.nav-cta:hover{background:var(--gold2)}
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-/* HERO */
-.hero{min-height:100vh;background:var(--navy3);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:120px 6vw 5rem}
-.hero-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,190,12,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,190,12,.035) 1px,transparent 1px);background-size:64px 64px}
-.hero-glow{position:absolute;right:-60px;top:-60px;width:480px;height:480px;background:radial-gradient(circle,rgba(255,190,12,.09) 0%,transparent 65%);pointer-events:none}
-.hero-inner{position:relative;z-index:2;max-width:880px}
-.hero-tag{display:inline-flex;align-items:center;gap:.6rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:2.25rem}
-.hero-tag::before{content:'';width:30px;height:1px;background:var(--gold)}
-.hero-h1{font-size:clamp(2.8rem,5.5vw,4.8rem);font-weight:700;line-height:1.05;letter-spacing:-.025em;color:var(--white);margin-bottom:1.75rem}
-.hero-h1 em{font-style:italic;color:var(--gold)}
-.hero-p{font-size:1.05rem;line-height:1.82;color:rgba(255,255,255,.52);max-width:580px;margin-bottom:3rem}
-.hero-three{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-bottom:3rem}
-.h3{background:rgba(255,255,255,.03);padding:1.75rem;transition:background .2s;cursor:default;position:relative}
-.h3::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:0;transition:opacity .2s}
-.h3:hover{background:rgba(255,190,12,.06)}
-.h3:hover::before{opacity:1}
-.h3-n{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.55rem;opacity:.75}
-.h3-title{font-size:.98rem;font-weight:700;color:var(--white);margin-bottom:.35rem;line-height:1.25}
-.h3-desc{font-size:.78rem;line-height:1.68;color:rgba(255,255,255,.38)}
-.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
-.btn-gold{background:var(--gold);color:var(--navy);padding:.9rem 2.2rem;font-size:.88rem;font-weight:700;border:none;border-radius:2px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .15s}
-.btn-gold:hover{background:#E0A800;transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:rgba(255,255,255,.6);padding:.9rem 2.2rem;font-size:.88rem;font-weight:700;border:2px solid rgba(255,255,255,.18);border-radius:2px;text-decoration:none;display:inline-block;transition:all .2s}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+    html {
+      scroll-behavior: smooth
+    }
 
-/* CLIENTS BAR */
-.clients-bar{background:var(--navy2);padding:1.2rem 6vw;display:flex;align-items:center;gap:2.5rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
-.cb-lbl{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.22);white-space:nowrap}
-.cb-names{display:flex;flex-wrap:wrap;gap:.5rem 2rem;flex:1}
-.cb-name{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.3)}
-.cb-stats{display:flex;gap:2.5rem;flex-shrink:0}
-.cbs{text-align:center}
-.cbs-val{font-size:1.25rem;font-weight:700;color:var(--gold);line-height:1}
-.cbs-lbl{font-size:.6rem;color:rgba(255,255,255,.25);margin-top:.1rem}
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
 
-/* SECTION BASE */
-section{padding:6rem 6vw}
-.sec-tag{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold2);margin-bottom:.85rem;display:flex;align-items:center;gap:.55rem}
-.sec-tag::before{content:'';width:20px;height:1px;background:var(--gold2)}
-h2{font-size:clamp(1.9rem,3vw,2.6rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;color:var(--navy);margin-bottom:1rem}
-.sec-lead{font-size:.95rem;line-height:1.82;color:var(--muted);max-width:520px}
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 6vw;
+      background: rgba(248, 247, 255, .97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border)
+    }
 
-/* WHAT YOU GET */
-.what-you-get{background:var(--white)}
-.wyg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
-.wyg-card{background:var(--cream);border:1px solid var(--border);border-radius:2px;padding:2rem;position:relative;overflow:hidden;transition:all .2s;cursor:default}
-.wyg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
-.wyg-card:hover{border-color:rgba(27,16,73,.25);transform:translateY(-3px);box-shadow:0 12px 32px rgba(27,16,73,.08)}
-.wyg-num{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2);margin-bottom:.65rem}
-.wyg-title{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:.65rem}
-.wyg-desc{font-size:.84rem;line-height:1.78;color:var(--muted);margin-bottom:1.1rem}
-.wyg-items{display:flex;flex-direction:column;gap:.35rem}
-.wyg-item{font-size:.8rem;line-height:1.6;color:var(--muted);display:flex;gap:.55rem;align-items:flex-start}
-.wyg-item::before{content:'—';color:var(--gold2);font-weight:700;flex-shrink:0}
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none
+    }
 
-/* TALENT VALUE */
-.talent{background:var(--navy)}
-.talent .sec-tag{color:var(--gold)}
-.talent .sec-tag::before{background:var(--gold)}
-.talent h2{color:var(--white)}
-.talent .sec-lead{color:rgba(255,255,255,.48);margin-bottom:3.5rem}
-.talent-inner{display:grid;grid-template-columns:1fr 1.1fr;gap:4rem;align-items:start;margin-top:4rem}
-.talent-cards{display:flex;flex-direction:column;gap:1px}
-.tc{background:rgba(255,255,255,.04);border-left:3px solid var(--gold);padding:1.5rem 1.75rem;transition:background .2s;cursor:default}
-.tc:hover{background:rgba(255,190,12,.07)}
-.tc-title{font-size:.92rem;font-weight:700;color:var(--white);margin-bottom:.4rem}
-.tc-desc{font-size:.82rem;line-height:1.72;color:rgba(255,255,255,.48)}
-.talent-compare{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
-.talent-compare-head{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.06)}
-.tch-col{padding:.75rem 1.1rem;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
-.tch-col:first-child{color:rgba(255,255,255,.28);border-right:1px solid rgba(255,255,255,.06)}
-.tch-col:last-child{color:var(--gold)}
-.tcr{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(255,255,255,.05)}
-.tcr:nth-child(even){background:rgba(255,255,255,.02)}
-.tcr:last-child{border-bottom:none}
-.tcc{padding:.85rem 1.1rem;font-size:.79rem;line-height:1.6}
-.tcc:first-child{color:rgba(255,255,255,.3);border-right:1px solid rgba(255,255,255,.06)}
-.tcc.good{color:rgba(255,255,255,.75);font-weight:600}
-.talent-note{margin-top:1.25rem;padding:1.1rem 1.25rem;background:rgba(255,190,12,.08);border:1px solid rgba(255,190,12,.18);border-radius:2px;font-size:.82rem;line-height:1.72;color:rgba(255,255,255,.5)}
-.talent-note strong{color:var(--gold)}
+    .logo-img {
+      height: 30px;
+      display: block;
+      width: auto
+    }
 
-/* DELIVER */
-.deliver{background:var(--cream)}
-.deliver-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:4rem}
-.cap-group{margin-bottom:1.75rem}
-.cap-group-title{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);padding-bottom:.5rem;margin-bottom:.85rem;border-bottom:2px solid var(--gold);display:inline-block}
-.cap-items{display:flex;flex-direction:column;gap:.4rem}
-.cap-item{font-size:.84rem;line-height:1.65;color:var(--muted);display:flex;gap:.6rem;align-items:flex-start}
-.cap-item::before{content:'—';color:var(--gold2);font-weight:700;flex-shrink:0}
-.deliver-right{display:flex;flex-direction:column;gap:1.25rem}
-.pilot-block{background:var(--navy);border-radius:2px;padding:2rem}
-.pilot-block-title{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
-.pilot-block p{font-size:.82rem;line-height:1.72;color:rgba(255,255,255,.48);margin-bottom:1.25rem}
-.pilot-list{display:flex;flex-direction:column;gap:.45rem}
-.pl{font-size:.79rem;line-height:1.55;color:rgba(255,255,255,.5);display:flex;gap:.6rem;align-items:flex-start}
-.pl::before{content:'↗';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
-.stack-block{background:var(--white);border:1px solid var(--border);border-radius:2px;padding:1.5rem}
-.stack-title{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem}
-.stack-text{font-size:.8rem;line-height:1.72;color:var(--muted)}
+    .logo-mark {
+      width: 24px;
+      height: 24px;
+      background: var(--navy);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
 
-/* HOW */
-.hiw{background:var(--white)}
-.hiw-intro{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-bottom:3.5rem}
-.hiw-right p{font-size:.9rem;line-height:1.82;color:var(--muted)}
-.pathway{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:2px;overflow:hidden}
-.ps{background:var(--cream);padding:2rem;transition:background .2s;cursor:default}
-.ps:hover{background:var(--gold-lt)}
-.ps.hl{background:var(--navy)}
-.ps.hl:hover{background:var(--navy2)}
-.ps-num{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.5rem}
-.ps:not(.hl) .ps-num{color:var(--gold2)}
-.ps.hl .ps-num{color:var(--gold)}
-.ps-title{font-size:1rem;font-weight:700;margin-bottom:.3rem}
-.ps:not(.hl) .ps-title{color:var(--navy)}
-.ps.hl .ps-title{color:var(--white)}
-.ps-time{font-size:.72rem;font-weight:700;margin-bottom:.7rem}
-.ps:not(.hl) .ps-time{color:var(--gold2)}
-.ps.hl .ps-time{color:var(--gold)}
-.ps-desc{font-size:.8rem;line-height:1.72}
-.ps:not(.hl) .ps-desc{color:var(--muted)}
-.ps.hl .ps-desc{color:rgba(255,255,255,.48)}
-.pathway-note{margin-top:1.5rem;padding:1.25rem 1.5rem;background:var(--cream);border:1px solid var(--border);border-radius:2px;font-size:.84rem;line-height:1.72;color:var(--muted)}
-.pathway-note strong{color:var(--navy)}
+    .logo-mark span {
+      width: 10px;
+      height: 10px;
+      background: var(--gold);
+      border-radius: 1px;
+      display: block
+    }
 
-/* TRACK */
-.track{background:var(--navy3)}
-.track .sec-tag{color:var(--gold)}
-.track .sec-tag::before{background:var(--gold)}
-.track h2{color:var(--white)}
-.track .sec-lead{color:rgba(255,255,255,.42);margin-bottom:3.5rem}
-.track-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;margin-bottom:3rem}
-.ts{background:rgba(255,255,255,.03);padding:1.75rem;text-align:center}
-.ts-val{font-size:2.5rem;font-weight:700;color:var(--gold);line-height:1}
-.ts-lbl{font-size:.7rem;color:rgba(255,255,255,.3);margin-top:.4rem;line-height:1.5}
-.track-proof{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.tp{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;padding:2rem;transition:all .2s}
-.tp:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14)}
-.tp-title{font-size:.92rem;font-weight:700;color:var(--white);margin-bottom:.65rem}
-.tp-desc{font-size:.82rem;line-height:1.72;color:rgba(255,255,255,.42)}
-.tp-pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.85rem}
-.tp-pill{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.32);padding:.2rem .65rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:100px}
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.75rem
+    }
+
+    .nav-links a {
+      font-size: .82rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .nav-links a:hover {
+      color: var(--navy)
+    }
+
+    .nav-cta {
+      background: var(--navy);
+      color: var(--white);
+      padding: .55rem 1.4rem;
+      border-radius: 2px;
+      font-weight: 700;
+      font-size: .82rem;
+      text-decoration: none;
+      transition: background .2s
+    }
+
+    .nav-cta:hover {
+      background: var(--gold2)
+    }
+
+    /* Mobile Hamburger & Menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 101;
+      position: relative;
+    }
+
+    .menu-toggle:focus {
+      outline: none;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background-color: var(--navy);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+    }
+
+    .menu-toggle.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+      background-color: var(--white);
+    }
+
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+      background-color: var(--white);
+    }
+
+    /* Mobile Menu Drawer */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 300px;
+      height: 100vh;
+      background: var(--navy3);
+      z-index: 99;
+      padding: 100px 2.5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.25);
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mobile-menu.open {
+      right: 0;
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 8, 38, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 98;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .mobile-links a {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      transition: color 0.2s, padding-left 0.2s;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 0.85rem;
+    }
+
+    .mobile-links a:hover {
+      color: var(--gold);
+      padding-left: 6px;
+    }
+
+    .mobile-cta {
+      background: var(--gold);
+      color: var(--navy3);
+      padding: 0.9rem 1.5rem;
+      border-radius: 2px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 1rem;
+    }
+
+    .mobile-cta:hover {
+      background: var(--white);
+      transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy3);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 6vw 5rem
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 190, 12, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 190, 12, .035) 1px, transparent 1px);
+      background-size: 64px 64px
+    }
+
+    .hero-glow {
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(255, 190, 12, .09) 0%, transparent 65%);
+      pointer-events: none
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 880px
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.25rem
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--gold)
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.025em;
+      color: var(--white);
+      margin-bottom: 1.75rem
+    }
+
+    .hero-h1 em {
+      font-style: italic;
+      color: var(--gold)
+    }
+
+    .hero-p {
+      font-size: 1.05rem;
+      line-height: 1.82;
+      color: rgba(255, 255, 255, .52);
+      max-width: 580px;
+      margin-bottom: 3rem
+    }
+
+    .hero-three {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255, 255, 255, .08);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 3rem
+    }
+
+    .h3 {
+      background: rgba(255, 255, 255, .03);
+      padding: 1.75rem;
+      transition: background .2s;
+      cursor: default;
+      position: relative
+    }
+
+    .h3::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold);
+      opacity: 0;
+      transition: opacity .2s
+    }
+
+    .h3:hover {
+      background: rgba(255, 190, 12, .06)
+    }
+
+    .h3:hover::before {
+      opacity: 1
+    }
+
+    .h3-n {
+      font-family: 'DM Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .55rem;
+      opacity: .75
+    }
+
+    .h3-title {
+      font-size: .98rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: .35rem;
+      line-height: 1.25
+    }
+
+    .h3-desc {
+      font-size: .78rem;
+      line-height: 1.68;
+      color: rgba(255, 255, 255, .38)
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+      padding: .9rem 2.2rem;
+      font-size: .88rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background .2s, transform .15s
+    }
+
+    .btn-gold:hover {
+      background: #E0A800;
+      transform: translateY(-1px)
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: rgba(255, 255, 255, .6);
+      padding: .9rem 2.2rem;
+      font-size: .88rem;
+      font-weight: 700;
+      border: 2px solid rgba(255, 255, 255, .18);
+      border-radius: 2px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all .2s
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold)
+    }
+
+    /* CLIENTS BAR */
+    .clients-bar {
+      background: var(--navy2);
+      padding: 1.2rem 6vw;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255, 255, 255, .05);
+      border-bottom: 1px solid rgba(255, 255, 255, .05)
+    }
+
+    .cb-lbl {
+      font-family: 'DM Mono', monospace;
+      font-size: .55rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .22);
+      white-space: nowrap
+    }
+
+    .cb-names {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 2rem;
+      flex: 1
+    }
+
+    .cb-name {
+      font-size: .78rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .3)
+    }
+
+    .cb-stats {
+      display: flex;
+      gap: 2.5rem;
+      flex-shrink: 0
+    }
+
+    .cbs {
+      text-align: center
+    }
+
+    .cbs-val {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1
+    }
+
+    .cbs-lbl {
+      font-size: .6rem;
+      color: rgba(255, 255, 255, .25);
+      margin-top: .1rem
+    }
+
+    /* SECTION BASE */
+    section {
+      padding: 6rem 6vw
+    }
+
+    .sec-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      margin-bottom: .85rem;
+      display: flex;
+      align-items: center;
+      gap: .55rem
+    }
+
+    .sec-tag::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--gold2)
+    }
+
+    h2 {
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      color: var(--navy);
+      margin-bottom: 1rem
+    }
+
+    .sec-lead {
+      font-size: .95rem;
+      line-height: 1.82;
+      color: var(--muted);
+      max-width: 520px
+    }
+
+    /* WHAT YOU GET */
+    .what-you-get {
+      background: var(--white)
+    }
+
+    .wyg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem
+    }
+
+    .wyg-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all .2s;
+      cursor: default
+    }
+
+    .wyg-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold)
+    }
+
+    .wyg-card:hover {
+      border-color: rgba(27, 16, 73, .25);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(27, 16, 73, .08)
+    }
+
+    .wyg-num {
+      font-family: 'DM Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      margin-bottom: .65rem
+    }
+
+    .wyg-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: .65rem
+    }
+
+    .wyg-desc {
+      font-size: .84rem;
+      line-height: 1.78;
+      color: var(--muted);
+      margin-bottom: 1.1rem
+    }
+
+    .wyg-items {
+      display: flex;
+      flex-direction: column;
+      gap: .35rem
+    }
+
+    .wyg-item {
+      font-size: .8rem;
+      line-height: 1.6;
+      color: var(--muted);
+      display: flex;
+      gap: .55rem;
+      align-items: flex-start
+    }
+
+    .wyg-item::before {
+      content: '—';
+      color: var(--gold2);
+      font-weight: 700;
+      flex-shrink: 0
+    }
+
+    /* TALENT VALUE */
+    .talent {
+      background: var(--navy)
+    }
+
+    .talent .sec-tag {
+      color: var(--gold)
+    }
+
+    .talent .sec-tag::before {
+      background: var(--gold)
+    }
+
+    .talent h2 {
+      color: var(--white)
+    }
+
+    .talent .sec-lead {
+      color: rgba(255, 255, 255, .48);
+      margin-bottom: 3.5rem
+    }
+
+    .talent-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-top: 4rem
+    }
+
+    .talent-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1px
+    }
+
+    .tc {
+      background: rgba(255, 255, 255, .04);
+      border-left: 3px solid var(--gold);
+      padding: 1.5rem 1.75rem;
+      transition: background .2s;
+      cursor: default
+    }
+
+    .tc:hover {
+      background: rgba(255, 190, 12, .07)
+    }
+
+    .tc-title {
+      font-size: .92rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: .4rem
+    }
+
+    .tc-desc {
+      font-size: .82rem;
+      line-height: 1.72;
+      color: rgba(255, 255, 255, .48)
+    }
+
+    .talent-compare {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 2px;
+      overflow: hidden
+    }
+
+    .talent-compare-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: rgba(255, 255, 255, .06)
+    }
+
+    .tch-col {
+      padding: .75rem 1.1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .56rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 500
+    }
+
+    .tch-col:first-child {
+      color: rgba(255, 255, 255, .28);
+      border-right: 1px solid rgba(255, 255, 255, .06)
+    }
+
+    .tch-col:last-child {
+      color: var(--gold)
+    }
+
+    .tcr {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid rgba(255, 255, 255, .05)
+    }
+
+    .tcr:nth-child(even) {
+      background: rgba(255, 255, 255, .02)
+    }
+
+    .tcr:last-child {
+      border-bottom: none
+    }
+
+    .tcc {
+      padding: .85rem 1.1rem;
+      font-size: .79rem;
+      line-height: 1.6
+    }
+
+    .tcc:first-child {
+      color: rgba(255, 255, 255, .3);
+      border-right: 1px solid rgba(255, 255, 255, .06)
+    }
+
+    .tcc.good {
+      color: rgba(255, 255, 255, .75);
+      font-weight: 600
+    }
+
+    .talent-note {
+      margin-top: 1.25rem;
+      padding: 1.1rem 1.25rem;
+      background: rgba(255, 190, 12, .08);
+      border: 1px solid rgba(255, 190, 12, .18);
+      border-radius: 2px;
+      font-size: .82rem;
+      line-height: 1.72;
+      color: rgba(255, 255, 255, .5)
+    }
+
+    .talent-note strong {
+      color: var(--gold)
+    }
+
+    /* DELIVER */
+    .deliver {
+      background: var(--cream)
+    }
+
+    .deliver-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 4rem
+    }
+
+    .cap-group {
+      margin-bottom: 1.75rem
+    }
+
+    .cap-group-title {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      padding-bottom: .5rem;
+      margin-bottom: .85rem;
+      border-bottom: 2px solid var(--gold);
+      display: inline-block
+    }
+
+    .cap-items {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem
+    }
+
+    .cap-item {
+      font-size: .84rem;
+      line-height: 1.65;
+      color: var(--muted);
+      display: flex;
+      gap: .6rem;
+      align-items: flex-start
+    }
+
+    .cap-item::before {
+      content: '—';
+      color: var(--gold2);
+      font-weight: 700;
+      flex-shrink: 0
+    }
+
+    .deliver-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem
+    }
+
+    .pilot-block {
+      background: var(--navy);
+      border-radius: 2px;
+      padding: 2rem
+    }
+
+    .pilot-block-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: .5rem
+    }
+
+    .pilot-block p {
+      font-size: .82rem;
+      line-height: 1.72;
+      color: rgba(255, 255, 255, .48);
+      margin-bottom: 1.25rem
+    }
+
+    .pilot-list {
+      display: flex;
+      flex-direction: column;
+      gap: .45rem
+    }
+
+    .pl {
+      font-size: .79rem;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, .5);
+      display: flex;
+      gap: .6rem;
+      align-items: flex-start
+    }
+
+    .pl::before {
+      content: '↗';
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px
+    }
+
+    .stack-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 1.5rem
+    }
+
+    .stack-title {
+      font-family: 'DM Mono', monospace;
+      font-size: .56rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: .75rem
+    }
+
+    .stack-text {
+      font-size: .8rem;
+      line-height: 1.72;
+      color: var(--muted)
+    }
+
+    /* HOW */
+    .hiw {
+      background: var(--white)
+    }
+
+    .hiw-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      margin-bottom: 3.5rem
+    }
+
+    .hiw-right p {
+      font-size: .9rem;
+      line-height: 1.82;
+      color: var(--muted)
+    }
+
+    .pathway {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden
+    }
+
+    .ps {
+      background: var(--cream);
+      padding: 2rem;
+      transition: background .2s;
+      cursor: default
+    }
+
+    .ps:hover {
+      background: var(--gold-lt)
+    }
+
+    .ps.hl {
+      background: var(--navy)
+    }
+
+    .ps.hl:hover {
+      background: var(--navy2)
+    }
+
+    .ps-num {
+      font-family: 'DM Mono', monospace;
+      font-size: .56rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: .5rem
+    }
+
+    .ps:not(.hl) .ps-num {
+      color: var(--gold2)
+    }
+
+    .ps.hl .ps-num {
+      color: var(--gold)
+    }
+
+    .ps-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: .3rem
+    }
+
+    .ps:not(.hl) .ps-title {
+      color: var(--navy)
+    }
+
+    .ps.hl .ps-title {
+      color: var(--white)
+    }
+
+    .ps-time {
+      font-size: .72rem;
+      font-weight: 700;
+      margin-bottom: .7rem
+    }
+
+    .ps:not(.hl) .ps-time {
+      color: var(--gold2)
+    }
+
+    .ps.hl .ps-time {
+      color: var(--gold)
+    }
+
+    .ps-desc {
+      font-size: .8rem;
+      line-height: 1.72
+    }
+
+    .ps:not(.hl) .ps-desc {
+      color: var(--muted)
+    }
+
+    .ps.hl .ps-desc {
+      color: rgba(255, 255, 255, .48)
+    }
+
+    .pathway-note {
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-size: .84rem;
+      line-height: 1.72;
+      color: var(--muted)
+    }
+
+    .pathway-note strong {
+      color: var(--navy)
+    }
+
+    /* TRACK */
+    .track {
+      background: var(--navy3)
+    }
+
+    .track .sec-tag {
+      color: var(--gold)
+    }
+
+    .track .sec-tag::before {
+      background: var(--gold)
+    }
+
+    .track h2 {
+      color: var(--white)
+    }
+
+    .track .sec-lead {
+      color: rgba(255, 255, 255, .42);
+      margin-bottom: 3.5rem
+    }
+
+    .track-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255, 255, 255, .07);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 3rem
+    }
+
+    .ts {
+      background: rgba(255, 255, 255, .03);
+      padding: 1.75rem;
+      text-align: center
+    }
+
+    .ts-val {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1
+    }
+
+    .ts-lbl {
+      font-size: .7rem;
+      color: rgba(255, 255, 255, .3);
+      margin-top: .4rem;
+      line-height: 1.5
+    }
+
+    .track-proof {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem
+    }
+
+    .tp {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 2px;
+      padding: 2rem;
+      transition: all .2s
+    }
+
+    .tp:hover {
+      background: rgba(255, 255, 255, .07);
+      border-color: rgba(255, 255, 255, .14)
+    }
+
+    .tp-title {
+      font-size: .92rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: .65rem
+    }
+
+    .tp-desc {
+      font-size: .82rem;
+      line-height: 1.72;
+      color: rgba(255, 255, 255, .42)
+    }
+
+    .tp-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: .85rem
+    }
+
+    .tp-pill {
+      font-size: .72rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .32);
+      padding: .2rem .65rem;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 100px
+    }
 
 
-/* CASE STUDIES */
-.cases{background:var(--white)}
-.cases .sec-tag::before{background:var(--gold2)}
-.cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3.5rem}
-.case-card{
-  background:var(--cream);border:1px solid var(--border);
-  border-radius:2px;padding:0;
-  overflow:hidden;transition:all .2s;cursor:default;
-  display:flex;flex-direction:column;
-}
-.case-card:hover{border-color:var(--gold2);box-shadow:0 8px 32px rgba(27,16,73,.08);transform:translateY(-2px)}
-.case-card-top{
-  background:var(--navy);padding:1.75rem;
-  position:relative;overflow:hidden;
-}
-.case-card-top::before{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:var(--gold);
-}
-.case-client{
-  font-size:1.1rem;font-weight:700;color:var(--white);
-  margin-bottom:.3rem;line-height:1.2;
-}
-.case-location{
-  font-family:'DM Mono',monospace;
-  font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--gold);opacity:.85;
-}
-.case-card-body{padding:1.5rem;flex:1;display:flex;flex-direction:column;gap:1rem}
-.case-type{
-  font-family:'DM Mono',monospace;
-  font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--gold2);
-}
-.case-headline{font-size:.95rem;font-weight:700;color:var(--navy);line-height:1.35}
-.case-story{font-size:.82rem;line-height:1.75;color:var(--muted)}
-.case-outcome{
-  margin-top:auto;padding:.85rem 1rem;
-  background:var(--navy);border-radius:2px;
-  font-size:.8rem;line-height:1.6;color:rgba(255,255,255,.65);
-  font-style:italic;
-}
-.case-outcome strong{color:var(--gold);font-style:normal}
-.cases-note{
-  margin-top:2rem;padding:1.25rem 1.5rem;
-  background:var(--mid);border:1px solid var(--border);border-radius:2px;
-  font-size:.84rem;line-height:1.7;color:var(--muted);
-  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
-}
-.cases-note strong{color:var(--navy)}
-@media(max-width:960px){.cases-grid{grid-template-columns:1fr}}
+    /* CASE STUDIES */
+    .cases {
+      background: var(--white)
+    }
 
-/* MODEL */
-.model{background:var(--white)}
-.model-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:4rem}
-.compare{border:1px solid var(--border);border-radius:2px;overflow:hidden}
-.compare-head{display:grid;grid-template-columns:1fr 1fr;background:var(--navy)}
-.ch-col{padding:.85rem 1.25rem;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.ch-col:first-child{color:rgba(255,255,255,.3);border-right:1px solid rgba(255,255,255,.08)}
-.ch-col:last-child{color:var(--gold)}
-.compare-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
-.compare-row:last-child{border-bottom:none}
-.compare-cell{padding:.85rem 1.25rem;font-size:.8rem;line-height:1.6}
-.compare-cell:first-child{color:var(--muted);border-right:1px solid var(--border);background:var(--mid)}
-.compare-cell.good{color:#1A5832;background:#EAF5EE;font-weight:600}
-.model-right h2{margin-bottom:1rem}
-.model-right .sec-lead{margin-bottom:2rem}
-.model-points{display:flex;flex-direction:column;gap:.85rem}
-.mp{display:flex;gap:.8rem;align-items:flex-start}
-.mp-dot{width:8px;height:8px;flex-shrink:0;background:var(--gold);border-radius:50%;margin-top:.45rem}
-.mp-text{font-size:.88rem;line-height:1.72;color:var(--muted)}
-.mp-text strong{color:var(--navy)}
+    .cases .sec-tag::before {
+      background: var(--gold2)
+    }
 
-/* GET STARTED */
-.get-started{background:var(--navy);display:grid;grid-template-columns:1fr 1fr;min-height:460px}
-.gs-left{padding:5rem 4vw 5rem 6vw;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.07)}
-.gs-right{padding:5rem 6vw 5rem 4vw;display:flex;flex-direction:column;justify-content:center}
-.gs-tag{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.85rem;display:flex;align-items:center;gap:.5rem}
-.gs-tag::before{content:'';width:16px;height:1px;background:var(--gold)}
-.gs-h2{font-size:clamp(1.8rem,2.8vw,2.4rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;color:var(--white);margin-bottom:1rem}
-.gs-h2 em{font-style:italic;color:var(--gold)}
-.gs-p{font-size:.9rem;line-height:1.82;color:rgba(255,255,255,.42);margin-bottom:2.5rem;max-width:380px}
-.ccs{display:flex;flex-direction:column;gap:.65rem}
-.cc{display:flex;gap:.9rem;align-items:center;padding:1.1rem 1.25rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:2px;text-decoration:none;transition:all .2s}
-.cc:hover{background:rgba(255,190,12,.08);border-color:rgba(255,190,12,.22)}
-.cc-icon{font-size:1rem;flex-shrink:0}
-.cc-label{font-size:.84rem;font-weight:700;color:var(--white)}
-.cc-sub{font-size:.7rem;color:rgba(255,255,255,.28);margin-top:.1rem}
-.gs-points{display:flex;flex-direction:column;gap:1rem}
-.gsp{display:flex;gap:.8rem;align-items:flex-start}
-.gsp-dot{width:6px;height:6px;flex-shrink:0;background:var(--gold);border-radius:50%;margin-top:.5rem}
-.gsp-text{font-size:.86rem;line-height:1.72;color:rgba(255,255,255,.45)}
-.gsp-text strong{color:rgba(255,255,255,.82)}
-.gs-direct{margin-top:2rem;padding:1.25rem 1.5rem;background:rgba(255,190,12,.07);border:1px solid rgba(255,190,12,.18);border-radius:2px}
-.gs-direct p{font-size:.82rem;line-height:1.7;color:rgba(255,255,255,.45)}
-.gs-direct strong{color:var(--gold)}
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem
+    }
 
-/* FOOTER */
-footer{background:#08061A;padding:2.25rem 6vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:2px solid var(--gold)}
-.foot-logo{display:flex;align-items:center;gap:.5rem;font-size:.9rem;font-weight:700;color:rgba(255,255,255,.32);text-decoration:none}
-.foot-logo-mark{width:18px;height:18px;background:rgba(255,190,12,.3);border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.foot-logo-mark span{width:7px;height:7px;background:var(--gold);border-radius:1px;display:block}
-.foot-mid{font-size:.7rem;color:rgba(255,255,255,.18)}
-.foot-links{display:flex;gap:1.5rem}
-.foot-links a{font-size:.7rem;color:rgba(255,255,255,.22);text-decoration:none;transition:color .2s}
-.foot-links a:hover{color:var(--gold)}
+    .case-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0;
+      overflow: hidden;
+      transition: all .2s;
+      cursor: default;
+      display: flex;
+      flex-direction: column;
+    }
 
-/* ANIM */
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.fu{animation:fadeUp .6s ease both;opacity:0}
-.d1{animation-delay:.1s}.d2{animation-delay:.22s}.d3{animation-delay:.34s}.d4{animation-delay:.48s}
+    .case-card:hover {
+      border-color: var(--gold2);
+      box-shadow: 0 8px 32px rgba(27, 16, 73, .08);
+      transform: translateY(-2px)
+    }
 
-/* RESPONSIVE */
-@media(max-width:960px){
-  .hero-three,.wyg-grid,.talent-inner,.deliver-inner,.hiw-intro,.pathway,.track-stats,.track-proof,.model-inner,.get-started{grid-template-columns:1fr}
-  .gs-left{border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}
-  .gs-left,.gs-right{padding:4rem 5vw}
-  nav .nav-links{display:none}
-}
-</style>
+    .case-card-top {
+      background: var(--navy);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-card-top::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .case-client {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: .3rem;
+      line-height: 1.2;
+    }
+
+    .case-location {
+      font-family: 'DM Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .85;
+    }
+
+    .case-card-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem
+    }
+
+    .case-type {
+      font-family: 'DM Mono', monospace;
+      font-size: .56rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold2);
+    }
+
+    .case-headline {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.35
+    }
+
+    .case-story {
+      font-size: .82rem;
+      line-height: 1.75;
+      color: var(--muted)
+    }
+
+    .case-outcome {
+      margin-top: auto;
+      padding: .85rem 1rem;
+      background: var(--navy);
+      border-radius: 2px;
+      font-size: .8rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, .65);
+      font-style: italic;
+    }
+
+    .case-outcome strong {
+      color: var(--gold);
+      font-style: normal
+    }
+
+    .cases-note {
+      margin-top: 2rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-size: .84rem;
+      line-height: 1.7;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cases-note strong {
+      color: var(--navy)
+    }
+
+    @media(max-width:960px) {
+      .cases-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* MODEL */
+    .model {
+      background: var(--white)
+    }
+
+    .model-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-top: 4rem
+    }
+
+    .compare {
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden
+    }
+
+    .compare-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--navy)
+    }
+
+    .ch-col {
+      padding: .85rem 1.25rem;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase
+    }
+
+    .ch-col:first-child {
+      color: rgba(255, 255, 255, .3);
+      border-right: 1px solid rgba(255, 255, 255, .08)
+    }
+
+    .ch-col:last-child {
+      color: var(--gold)
+    }
+
+    .compare-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .compare-row:last-child {
+      border-bottom: none
+    }
+
+    .compare-cell {
+      padding: .85rem 1.25rem;
+      font-size: .8rem;
+      line-height: 1.6
+    }
+
+    .compare-cell:first-child {
+      color: var(--muted);
+      border-right: 1px solid var(--border);
+      background: var(--mid)
+    }
+
+    .compare-cell.good {
+      color: #1A5832;
+      background: #EAF5EE;
+      font-weight: 600
+    }
+
+    .model-right h2 {
+      margin-bottom: 1rem
+    }
+
+    .model-right .sec-lead {
+      margin-bottom: 2rem
+    }
+
+    .model-points {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem
+    }
+
+    .mp {
+      display: flex;
+      gap: .8rem;
+      align-items: flex-start
+    }
+
+    .mp-dot {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+      background: var(--gold);
+      border-radius: 50%;
+      margin-top: .45rem
+    }
+
+    .mp-text {
+      font-size: .88rem;
+      line-height: 1.72;
+      color: var(--muted)
+    }
+
+    .mp-text strong {
+      color: var(--navy)
+    }
+
+    /* GET STARTED */
+    .get-started {
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 460px
+    }
+
+    .gs-left {
+      padding: 5rem 4vw 5rem 6vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid rgba(255, 255, 255, .07)
+    }
+
+    .gs-right {
+      padding: 5rem 6vw 5rem 4vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    }
+
+    .gs-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: .56rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .85rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .gs-tag::before {
+      content: '';
+      width: 16px;
+      height: 1px;
+      background: var(--gold)
+    }
+
+    .gs-h2 {
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      color: var(--white);
+      margin-bottom: 1rem
+    }
+
+    .gs-h2 em {
+      font-style: italic;
+      color: var(--gold)
+    }
+
+    .gs-p {
+      font-size: .9rem;
+      line-height: 1.82;
+      color: rgba(255, 255, 255, .42);
+      margin-bottom: 2.5rem;
+      max-width: 380px
+    }
+
+    .ccs {
+      display: flex;
+      flex-direction: column;
+      gap: .65rem
+    }
+
+    .cc {
+      display: flex;
+      gap: .9rem;
+      align-items: center;
+      padding: 1.1rem 1.25rem;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .07);
+      border-radius: 2px;
+      text-decoration: none;
+      transition: all .2s
+    }
+
+    .cc:hover {
+      background: rgba(255, 190, 12, .08);
+      border-color: rgba(255, 190, 12, .22)
+    }
+
+    .cc-icon {
+      font-size: 1rem;
+      flex-shrink: 0
+    }
+
+    .cc-label {
+      font-size: .84rem;
+      font-weight: 700;
+      color: var(--white)
+    }
+
+    .cc-sub {
+      font-size: .7rem;
+      color: rgba(255, 255, 255, .28);
+      margin-top: .1rem
+    }
+
+    .gs-points {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem
+    }
+
+    .gsp {
+      display: flex;
+      gap: .8rem;
+      align-items: flex-start
+    }
+
+    .gsp-dot {
+      width: 6px;
+      height: 6px;
+      flex-shrink: 0;
+      background: var(--gold);
+      border-radius: 50%;
+      margin-top: .5rem
+    }
+
+    .gsp-text {
+      font-size: .86rem;
+      line-height: 1.72;
+      color: rgba(255, 255, 255, .45)
+    }
+
+    .gsp-text strong {
+      color: rgba(255, 255, 255, .82)
+    }
+
+    .gs-direct {
+      margin-top: 2rem;
+      padding: 1.25rem 1.5rem;
+      background: rgba(255, 190, 12, .07);
+      border: 1px solid rgba(255, 190, 12, .18);
+      border-radius: 2px
+    }
+
+    .gs-direct p {
+      font-size: .82rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, .45)
+    }
+
+    .gs-direct strong {
+      color: var(--gold)
+    }
+
+    /* FOOTER */
+    footer {
+      background: #08061A;
+      padding: 2.25rem 6vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-top: 2px solid var(--gold)
+    }
+
+    .foot-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none
+    }
+
+    .foot-logo-img {
+      height: 30px;
+      display: block;
+      width: auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+      transition: opacity 0.2s
+    }
+
+    .foot-logo-img:hover {
+      opacity: 1
+    }
+
+    .foot-logo-mark {
+      width: 18px;
+      height: 18px;
+      background: rgba(255, 190, 12, .3);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .foot-logo-mark span {
+      width: 7px;
+      height: 7px;
+      background: var(--gold);
+      border-radius: 1px;
+      display: block
+    }
+
+    .foot-mid {
+      font-size: .7rem;
+      color: rgb(255, 255, 255)
+    }
+
+    .foot-links {
+      display: flex;
+      gap: 1.5rem
+    }
+
+    .foot-links a {
+      font-size: .7rem;
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .foot-links a:hover {
+      color: var(--gold)
+    }
+
+    /* ANIM */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .fu {
+      animation: fadeUp .6s ease both;
+      opacity: 0
+    }
+
+    .d1 {
+      animation-delay: .1s
+    }
+
+    .d2 {
+      animation-delay: .22s
+    }
+
+    .d3 {
+      animation-delay: .34s
+    }
+
+    .d4 {
+      animation-delay: .48s
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:960px) {
+
+      .hero-three,
+      .wyg-grid,
+      .talent-inner,
+      .deliver-inner,
+      .hiw-intro,
+      .pathway,
+      .track-stats,
+      .track-proof,
+      .model-inner,
+      .get-started {
+        grid-template-columns: 1fr
+      }
+
+      .gs-left {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, .07)
+      }
+
+      .gs-left,
+      .gs-right {
+        padding: 4rem 5vw
+      }
+
+      nav .nav-links {
+        display: none
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+    }
+
+    @media(max-width:560px) {
+      nav .nav-cta {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="logo">
-    <div class="logo-mark"><span></span></div>
-    Codetrain
-  </a>
-  <div class="nav-right">
-    <div class="nav-links">
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">
+      <img src="codetrain-logo.png" alt="Codetrain" class="logo-img">
+    </a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#talent">Our engineers</a>
+        <a href="#deliver">What we deliver</a>
+        <a href="#how">How we work</a>
+        <a href="#track">Track record</a><a href="#work">Our work</a>
+      </div>
+      <a href="mailto:richard@codetrainafrica.com?subject=Codetrain — Let's talk" class="nav-cta">Book a call →</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay and Drawer -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-links">
       <a href="#talent">Our engineers</a>
       <a href="#deliver">What we deliver</a>
       <a href="#how">How we work</a>
-      <a href="#track">Track record</a><a href="#work">Our work</a>
+      <a href="#track">Track record</a>
+      <a href="#work">Our work</a>
     </div>
-    <a href="mailto:richard@codetrainafrica.com?subject=Codetrain — Let's talk" class="nav-cta">Book a call →</a>
+    <a href="mailto:richard@codetrainafrica.com?subject=Codetrain — Let's talk" class="mobile-cta">Book a call →</a>
   </div>
-</nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-inner">
-    <div class="hero-tag fu">Codetrain · AI Engineering &amp; Delivery</div>
-    <h1 class="hero-h1 fu d1">
-      Build it. Deliver it.<br><em>Own the outcome.</em>
-    </h1>
-    <p class="hero-p fu d2">
-      Most companies know what they want to build. The gap is always who builds it — reliably, quickly, and without the overhead of a full hire. Codetrain provides structured AI engineering teams that scope your project, deliver it, and hand it over. Start in weeks, not months.
-    </p>
-    <div class="hero-three fu d3">
-      <div class="h3">
-        <div class="h3-n">Build</div>
-        <div class="h3-title">AI tools, automations,<br>prototypes &amp; MVPs</div>
-        <p class="h3-desc">An idea, a backlog, a delayed project. We scope it, staff it, and deliver working output — fixed price, defined timeline.</p>
-      </div>
-      <div class="h3">
-        <div class="h3-n">Transform</div>
-        <div class="h3-title">AI adoption across<br>your organisation</div>
-        <p class="h3-desc">Your organisation needs to adopt AI. We assess, build, deploy, and train your people — you own everything, your way of working changes.</p>
-      </div>
-      <div class="h3">
-        <div class="h3-n">Hire</div>
-        <div class="h3-title">Place AI engineers<br>on your team</div>
-        <p class="h3-desc">Access trained engineers on a pilot, retainer, or permanent basis. Most clients hire people whose work they have already seen.</p>
-      </div>
-    </div>
-    <div class="hero-ctas fu d4">
-      <a href="mailto:richard@codetrainafrica.com?subject=Codetrain — Let's talk" class="btn-gold">Book a call →</a>
-      <a href="#talent" class="btn-ghost">About our engineers</a>
-    </div>
-  </div>
-</section>
-
-<!-- CLIENTS BAR -->
-<div class="clients-bar">
-  <div class="cb-lbl">Employers we work with</div>
-  <div class="cb-names">
-    <span class="cb-name">Microsoft</span>
-    <span class="cb-name">Ecobank</span>
-    <span class="cb-name">mPharma</span>
-    <span class="cb-name">Hubtel</span>
-    <span class="cb-name">Stanchart</span>
-    <span class="cb-name">SAGE Germany</span>
-    <span class="cb-name">Infinitas Media</span>
-    <span class="cb-name">Big Viking Games</span>
-    <span class="cb-name">GIZ</span>
-    <span class="cb-name">Speedykom</span>
-  </div>
-  <div class="cb-stats">
-    <div class="cbs"><div class="cbs-val">100+</div><div class="cbs-lbl">Employers in pipeline</div></div>
-    <div class="cbs"><div class="cbs-val">89%</div><div class="cbs-lbl">Placement rate</div></div>
-  </div>
-</div>
-
-<!-- WHAT YOU GET -->
-<section class="what-you-get" id="services">
-  <div class="sec-tag">What we do</div>
-  <h2>Scoped. Staffed.<br>Delivered.</h2>
-  <p class="sec-lead">Three things companies engage Codetrain for. Each has a defined process, a clear outcome, and a fixed engagement model. No open-ended hourly rates. No surprises.</p>
-  <div class="wyg-grid">
-    <div class="wyg-card">
-      <div class="wyg-num">01 · Build</div>
-      <div class="wyg-title">Build AI tools &amp; products</div>
-      <p class="wyg-desc">You have an idea, a backlog, or a specific AI problem to solve. We scope it, assign a structured engineering team, and deliver it — fixed price, clear timeline, your IP.</p>
-      <div class="wyg-items">
-        <div class="wyg-item">AI tools, assistants, and chatbots</div>
-        <div class="wyg-item">Workflow and process automation</div>
-        <div class="wyg-item">MVPs, prototypes, and proof of concepts</div>
-        <div class="wyg-item">Full-stack applications and dashboards</div>
-        <div class="wyg-item">System integrations and APIs</div>
-      </div>
-    </div>
-    <div class="wyg-card">
-      <div class="wyg-num">02 · Transform</div>
-      <div class="wyg-title">Transform how your organisation uses AI</div>
-      <p class="wyg-desc">We come in, assess where AI creates value in your operations, build the systems, deploy them, and develop your people to run them. Structured engagement, defined outcomes, staff training included.</p>
-      <div class="wyg-items">
-        <div class="wyg-item">AI opportunity assessment and roadmap</div>
-        <div class="wyg-item">System build and deployment</div>
-        <div class="wyg-item">Staff and management training included</div>
-        <div class="wyg-item">90-day support and iteration</div>
-        <div class="wyg-item">You own everything we build</div>
-      </div>
-    </div>
-    <div class="wyg-card">
-      <div class="wyg-num">03 · Hire</div>
-      <div class="wyg-title">Place AI engineers on your team</div>
-      <p class="wyg-desc">Access Codetrain's pipeline of trained AI engineers — on a pilot basis, a retainer, or as a permanent placement. Most employers start with a delivery engagement and hire when they've seen the work.</p>
-      <div class="wyg-items">
-        <div class="wyg-item">Delivery pilot — lowest risk entry point</div>
-        <div class="wyg-item">Monthly retainer — ongoing capacity</div>
-        <div class="wyg-item">Permanent placement — direct hire</div>
-        <div class="wyg-item">Sponsored cohort — trained for your stack</div>
-        <div class="wyg-item">700+ engineers trained, 89% placed</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TALENT VALUE -->
-<section class="talent" id="talent">
-  <div class="sec-tag">Why the work is reliable</div>
-  <h2 style="color:var(--white)">Engineers who contribute<br>from Week 1.</h2>
-  <p class="sec-lead">The reason our teams integrate quickly, communicate well, and deliver on defined milestones — not by chance, but by design. Close to two years of structured preparation before they reach you.</p>
-  <div class="talent-inner">
-    <div class="talent-cards">
-      <div class="tc">
-        <div class="tc-title">Technical depth that shows up in Week 1</div>
-        <p class="tc-desc">Close to two years of hands-on AI and full-stack engineering — LLM APIs, production deployment, workflow automation, data pipelines. Engineers who have shipped real systems, not completed tutorials.</p>
-      </div>
-      <div class="tc">
-        <div class="tc-title">Professional values, embedded throughout</div>
-        <p class="tc-desc">Accountability, communication, meeting deadlines, working within a professional team — these are built into the programme, not learned on the job. You do not spend the first six months teaching them how to work.</p>
-      </div>
-      <div class="tc">
-        <div class="tc-title">Teachable and hungry</div>
-        <p class="tc-desc">Two years of structured feedback and peer review produces engineers who know how to take direction, how to improve, and how to learn from experienced colleagues. They arrive with appetite, not ego.</p>
-      </div>
-      <div class="tc">
-        <div class="tc-title">Teams available, not just individuals</div>
-        <p class="tc-desc">We can staff a 2–6 person delivery team within 2–3 weeks. Engineers who trained together, know how to work together, and have already shipped projects as a unit. You get a functioning team, not individuals who need to gel.</p>
-      </div>
-      <div class="tc">
-        <div class="tc-title">A global mindset — locally trained</div>
-        <p class="tc-desc">Trained in Ghana. Working with organisations in Ghana, across Africa, Germany, the UK, the US, and Canada. Engineers who understand professional standards across markets and can represent your organisation externally.</p>
-      </div>
-    </div>
-    <div>
-      <div class="talent-compare">
-        <div class="talent-compare-head">
-          <div class="tch-col">Typical hire</div>
-          <div class="tch-col">Codetrain engineer</div>
-        </div>
-        <div class="tcr">
-          <div class="tcc">3–6 month ramp before productive</div>
-          <div class="tcc good">Contributing from Week 1</div>
-        </div>
-        <div class="tcr">
-          <div class="tcc">Professional behaviour learned on the job</div>
-          <div class="tcc good">Professional values embedded in training</div>
-        </div>
-        <div class="tcr">
-          <div class="tcc">Single individual — needs team integration</div>
-          <div class="tcc good">Teams available — already work together</div>
-        </div>
-        <div class="tcr">
-          <div class="tcc">Certification-focused, not outcome-focused</div>
-          <div class="tcc good">Trained on real projects with real clients</div>
-        </div>
-        <div class="tcr">
-          <div class="tcc">Months to find and hire in a tight market</div>
-          <div class="tcc good">Delivery team starts in 2–3 weeks</div>
-        </div>
-        <div class="tcr">
-          <div class="tcc">Onboarding cost and time on your side</div>
-          <div class="tcc good">Pre-onboarded to professional standards</div>
-        </div>
-      </div>
-      <div class="talent-note">
-        <strong>The two-year difference.</strong> A short programme produces someone who has practised skills. Close to two years at Codetrain produces someone who has developed them — through real projects, structured feedback, and working with actual clients. That is the gap that shows up in the first week on the job.
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- DELIVER -->
-<section class="deliver" id="deliver">
-  <div class="sec-tag">Capabilities</div>
-  <div class="deliver-inner">
-    <div>
-      <h2>What we build<br>for you.</h2>
-      <p class="sec-lead" style="margin-bottom:2.5rem">Every project is scoped around a specific deliverable — not time and materials. You know what you are getting before work begins.</p>
-      <div class="cap-group">
-        <div class="cap-group-title">AI &amp; Automation</div>
-        <div class="cap-items">
-          <div class="cap-item">Workflow and process automation</div>
-          <div class="cap-item">AI assistants and internal copilots</div>
-          <div class="cap-item">Document processing and analysis</div>
-          <div class="cap-item">Customer-facing AI tools and chatbots</div>
-        </div>
-      </div>
-      <div class="cap-group">
-        <div class="cap-group-title">Product Engineering</div>
-        <div class="cap-items">
-          <div class="cap-item">Full-stack web applications</div>
-          <div class="cap-item">MVP and prototype development</div>
-          <div class="cap-item">Feature backlog acceleration</div>
-          <div class="cap-item">Internal tools and dashboards</div>
-        </div>
-      </div>
-      <div class="cap-group">
-        <div class="cap-group-title">Data &amp; Infrastructure</div>
-        <div class="cap-items">
-          <div class="cap-item">Data pipeline development and structuring</div>
-          <div class="cap-item">AI readiness preparation</div>
-          <div class="cap-item">AI-enabled SaaS integrations</div>
-          <div class="cap-item">Analytics and reporting infrastructure</div>
-        </div>
-      </div>
-    </div>
-    <div class="deliver-right">
-      <div class="pilot-block">
-        <div class="pilot-block-title">Example starting points</div>
-        <p>Concrete use cases where a 4–8 week pilot delivers measurable value and validates the working relationship.</p>
-        <div class="pilot-list">
-          <div class="pl">Automate internal reporting, approvals, or data entry using AI-enabled workflows</div>
-          <div class="pl">Build an internal knowledge assistant or customer-facing support tool trained on your data</div>
-          <div class="pl">Accelerate a product backlog — assign a team to deliver a defined sprint</div>
-          <div class="pl">Build a working prototype of a new product or feature in 6–8 weeks</div>
-          <div class="pl">Structure and connect internal data into AI-ready pipelines</div>
-        </div>
-      </div>
-      <div class="stack-block">
-        <div class="stack-title">Tech stack</div>
-        <p class="stack-text">Python · JavaScript · TypeScript · React · Node.js · FastAPI · PostgreSQL · OpenAI API · Claude API · LangChain · Supabase · AWS · GCP · Docker. We integrate into your existing workflow and stack — not the other way around.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW WE WORK -->
-<section class="hiw" id="how">
-  <div class="sec-tag">How we work</div>
-  <div class="hiw-intro">
-    <div>
-      <h2>Start small.<br>Scale on results.</h2>
-      <p class="sec-lead">No long-term commitment required upfront. Every stage proceeds only once the previous stage has demonstrated value. You stay in control throughout.</p>
-    </div>
-    <div style="padding-top:3.5rem">
-      <p>The most common path: a 4–8 week pilot on a defined problem, followed by an ongoing build or retainer, with the option to hire when the relationship is validated. Engagements can combine and evolve — a pilot becomes a retainer, a retainer converts to a hire.</p>
-    </div>
-  </div>
-  <div class="pathway">
-    <div class="ps hl">
-      <div class="ps-num">01 · Start here</div>
-      <div class="ps-title">Delivery Pilot</div>
-      <div class="ps-time">4–8 weeks</div>
-      <p class="ps-desc">Lowest risk entry. Small team (2–4 engineers), defined scope, measurable milestones. Validate the model before committing to more. Codetrain handles coordination and quality throughout.</p>
-    </div>
-    <div class="ps">
-      <div class="ps-num">02 · If it works</div>
-      <div class="ps-title">Ongoing Build</div>
-      <div class="ps-time">2–6 months</div>
-      <p class="ps-desc">Expanded team on a longer project. Production-ready delivery. Fully integrated into your engineering workflow. Dedicated project management and QA included.</p>
-    </div>
-    <div class="ps">
-      <div class="ps-num">03 · Long term</div>
-      <div class="ps-title">Retainer or Direct Hire</div>
-      <div class="ps-time">Ongoing</div>
-      <p class="ps-desc">Dedicated capacity on a monthly basis — or convert a proven engineer to your permanent team. We handle the talent side. Your call, your timing. Both paths always available.</p>
-    </div>
-  </div>
-  <div class="pathway-note">
-    <strong>For international partners:</strong> Engaging Codetrain as a service provider means no work permit applications, no local employment law complexity, no payroll obligations on your side. One service agreement. If and when you want to hire directly, we guide that process too.
-  </div>
-</section>
-
-<!-- TRACK RECORD -->
-<section class="track" id="track">
-  <div class="sec-tag">Track record</div>
-  <h2 style="color:var(--white)">Eight years.<br>Validated in production.</h2>
-  <p class="sec-lead">Not a new operation and not a pitch. Eight years of engineering delivery, audited financials, and a client list that validated the model before we called it one.</p>
-  <div class="track-stats">
-    <div class="ts"><div class="ts-val">700+</div><div class="ts-lbl">Engineers trained since 2017</div></div>
-    <div class="ts"><div class="ts-val">89%</div><div class="ts-lbl">Industry placement rate</div></div>
-    <div class="ts"><div class="ts-val">100+</div><div class="ts-lbl">Employers in active pipeline</div></div>
-    <div class="ts"><div class="ts-val">16+</div><div class="ts-lbl">AI projects for international clients</div></div>
-  </div>
-  <div class="track-proof">
-    <div class="tp">
-      <div class="tp-title">GIZ — Deutsche Gesellschaft für Internationale Zusammenarbeit</div>
-      <p class="tp-desc">Germany's federal development agency selected Codetrain as the delivery partner for its AI Talent Accelerator in Ghana. 50 AI engineers in structured training now. Selected on delivery outcomes, not a pitch. GIZ does not choose on goodwill.</p>
-    </div>
-    <div class="tp">
-      <div class="tp-title">Engineers working across four continents</div>
-      <p class="tp-desc">Codetrain graduates are placed in permanent and contract roles with companies across Ghana, Africa, Europe, and North America — hired on the strength of their work, not as a diversity initiative.</p>
-      <div class="tp-pills">
-        <span class="tp-pill">Microsoft</span>
-        <span class="tp-pill">Ecobank</span>
-        <span class="tp-pill">mPharma</span>
-        <span class="tp-pill">Hubtel</span>
-        <span class="tp-pill">SAGE Germany</span>
-        <span class="tp-pill">Infinitas Media</span>
-        <span class="tp-pill">Big Viking Games</span>
-        <span class="tp-pill">Stanchart</span>
-        <span class="tp-pill">Meqasa</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- CASE STUDIES -->
-<section class="cases" id="work">
-  <div class="sec-tag">Work we have delivered</div>
-  <h2>Projects that shipped.<br>Clients that came back.</h2>
-  <p class="sec-lead">A selection of delivery projects and partnerships — across product builds, AI engineering, and talent programmes. Each one a real engagement with a defined outcome.</p>
-  <div class="cases-grid">
-
-    <div class="case-card">
-      <div class="case-card-top">
-        <div class="case-client">BlackinTech</div>
-        <div class="case-location">Berlin, Germany · Community &amp; Professional Network</div>
-      </div>
-      <div class="case-card-body">
-        <div class="case-type">Prototype build · Engineer placement</div>
-        <div class="case-headline">From working prototype to a hired Codetrain engineer building the full platform</div>
-        <p class="case-story">BlackinTech needed to validate their product concept before committing to a full build. Codetrain engineers delivered a working prototype — scoped, built, and shipped. BlackinTech tested it with their community, validated the concept, and then hired a Codetrain engineer directly to build the full platform.</p>
-        <div class="case-outcome"><strong>The outcome:</strong> A direct hire decision made on the back of work already seen — not a speculative placement.</div>
-      </div>
-    </div>
-
-    <div class="case-card">
-      <div class="case-card-top">
-        <div class="case-client">eRateSync</div>
-        <div class="case-location">Los Angeles, USA · Education Technology</div>
-      </div>
-      <div class="case-card-body">
-        <div class="case-type">Full platform build · Award-winning delivery</div>
-        <div class="case-headline">An award-winning platform enabling education organisations to sync and manage E-Rate compliance documents</div>
-        <p class="case-story">eRateSync needed a production-ready platform for US school districts managing complex federal broadband funding compliance. Codetrain engineers built it end to end — from architecture to deployment. The platform went to market and won an industry award for its impact on education organisations.</p>
-        <div class="case-outcome"><strong>The outcome:</strong> A production platform built from Accra for a US market — delivered to award-winning standard.</div>
-      </div>
-    </div>
-
-    <div class="case-card">
-      <div class="case-card-top">
-        <div class="case-client">GIZ — Deutsche Gesellschaft für Internationale Zusammenarbeit</div>
-        <div class="case-location">Germany / Ghana · International Development</div>
-      </div>
-      <div class="case-card-body">
-        <div class="case-type">Sponsored cohort · AI talent programme</div>
-        <div class="case-headline">Germany's federal development agency selects Codetrain to deliver Ghana's national AI engineering programme</div>
-        <p class="case-story">GIZ selected Codetrain after extensive due diligence across curriculum quality, employment outcomes, safeguarding, and financial management. 50 AI engineers are in structured training now. GIZ pays the full cohort cost upfront — before training begins. The 89% graduate employment rate was a decisive factor in the selection.</p>
-        <div class="case-outcome"><strong>The outcome:</strong> Full cohort funded and paid upfront. Live training ongoing. GIZ does not select on potential — it selects on track record.</div>
-      </div>
-    </div>
-
-    <div class="case-card">
-      <div class="case-card-top">
-        <div class="case-client">Remotown</div>
-        <div class="case-location">Germany / Africa · HR &amp; Future of Work</div>
-      </div>
-      <div class="case-card-body">
-        <div class="case-type">Prototype build · HR system</div>
-        <div class="case-headline">A working employee leave request system prototype for a German-Africa HR platform</div>
-        <p class="case-story">Remotown builds HR infrastructure for the Africa-Germany talent corridor. They needed a functional prototype for an employee leave request management system — covering the full request-to-approval workflow. Codetrain engineers delivered a working prototype on a defined scope and timeline, built correctly for the specific operational context of cross-border employment.</p>
-        <div class="case-outcome"><strong>The outcome:</strong> Working prototype delivered. Remotown engineers understood the Germany-Africa context before a line of code was written.</div>
-      </div>
-    </div>
-
-  </div>
-  <div class="cases-note">
-    <span>These are four of 16+ delivery projects completed for international clients. Full case study documents available on request.</span>
-    <a href="mailto:richard@codetrainafrica.com?subject=Case Studies Request" style="color:var(--gold2);font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0">Request full case studies →</a>
-  </div>
-</section>
-
-<!-- THE MODEL -->
-<section class="model">
-  <div class="sec-tag">Why it works</div>
-  <div class="model-inner">
-    <div>
-      <div class="compare">
-        <div class="compare-head">
-          <div class="ch-col">Hiring from the market</div>
-          <div class="ch-col">Engaging Codetrain</div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-cell">Months of searching, interviewing, negotiating</div>
-          <div class="compare-cell good">Delivery team starts within 2–3 weeks</div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-cell">Long ramp before first productive output</div>
-          <div class="compare-cell good">Structured teams contributing from Week 1</div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-cell">Permanent headcount commitment upfront</div>
-          <div class="compare-cell good">Start with a pilot — commit only when confident</div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-cell">Individual hire — team integration takes time</div>
-          <div class="compare-cell good">Teams available who already work together</div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-cell">Expensive agency fees or internal HR cost</div>
-          <div class="compare-cell good">One service agreement, defined scope</div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-cell">Fit unknown until months into the job</div>
-          <div class="compare-cell good">Hire only work and people you have already seen</div>
-        </div>
-      </div>
-    </div>
-    <div class="model-right">
-      <h2>Start small.<br>Commit when confident.</h2>
-      <p class="sec-lead">Every engagement starts with a defined, low-risk pilot. You see the output before committing to more. Scale what works. Stop what does not. Convert to a hire when you are sure.</p>
-      <div class="model-points">
-        <div class="mp"><div class="mp-dot"></div><div class="mp-text"><strong>Start with a pilot.</strong> Small team, defined scope, 4–8 weeks. See the output before committing to anything further.</div></div>
-        <div class="mp"><div class="mp-dot"></div><div class="mp-text"><strong>Scale on results.</strong> Expand the engagement when the pilot works. If it does not, you have a scoped project and a clear answer.</div></div>
-        <div class="mp"><div class="mp-dot"></div><div class="mp-text"><strong>Hire when confident.</strong> Convert a proven engineer to a direct hire when you know the work and the person. We handle the process.</div></div>
-        <div class="mp"><div class="mp-dot"></div><div class="mp-text"><strong>Or stay on retainer.</strong> Dedicated capacity, predictable monthly cost, no headcount commitment. Many clients prefer this indefinitely.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- GET STARTED -->
-<div class="get-started" id="contact">
-  <div class="gs-left">
-    <div class="gs-tag">Start the conversation</div>
-    <h2 class="gs-h2">Tell us what<br><em>you need built.</em></h2>
-    <p class="gs-p">A rough brief is enough to start. We respond within 48 hours with a recommendation and, if there is a fit, a scoped proposal — deliverables, timeline, fixed price. No obligation beyond that conversation.</p>
-    <div class="ccs">
-      <a href="mailto:richard@codetrainafrica.com?subject=Build Enquiry — Codetrain" class="cc">
-        <div class="cc-icon">⚡</div>
-        <div><div class="cc-label">I have something to build</div><div class="cc-sub">Tool, automation, prototype, MVP, or backlog</div></div>
-      </a>
-      <a href="mailto:richard@codetrainafrica.com?subject=AI Transformation — Codetrain" class="cc">
-        <div class="cc-icon">🔄</div>
-        <div><div class="cc-label">I want to adopt AI across my organisation</div><div class="cc-sub">Systems, staff training, ongoing support</div></div>
-      </a>
-      <a href="mailto:richard@codetrainafrica.com?subject=Talent Enquiry — Codetrain" class="cc">
-        <div class="cc-icon">👩‍💻</div>
-        <div><div class="cc-label">I want to hire AI engineers</div><div class="cc-sub">Pilot, retainer, or direct placement</div></div>
-      </a>
-      <a href="mailto:richard@codetrainafrica.com?subject=Codetrain — General Enquiry" class="cc">
-        <div class="cc-icon">💬</div>
-        <div><div class="cc-label">I am not sure yet — let's talk</div><div class="cc-sub">richard@codetrainafrica.com · +233 545 792 397</div></div>
-      </a>
-    </div>
-  </div>
-  <div class="gs-right">
-    <div class="gs-tag">What to expect</div>
-    <h2 class="gs-h2" style="color:var(--white)">Simple from<br>your side.</h2>
-    <div class="gs-points">
-      <div class="gsp"><div class="gsp-dot"></div><div class="gsp-text"><strong>Response within 48 hours</strong> — direct, not automated</div></div>
-      <div class="gsp"><div class="gsp-dot"></div><div class="gsp-text"><strong>Scoped proposal in 5 working days</strong> — defined deliverables, fixed price</div></div>
-      <div class="gsp"><div class="gsp-dot"></div><div class="gsp-text"><strong>No long-term commitment required</strong> — every engagement starts with a pilot</div></div>
-      <div class="gsp"><div class="gsp-dot"></div><div class="gsp-text"><strong>You own everything built</strong> — all code, systems, documentation</div></div>
-      <div class="gsp"><div class="gsp-dot"></div><div class="gsp-text"><strong>English throughout</strong> — management, documentation, handover</div></div>
-      <div class="gsp"><div class="gsp-dot"></div><div class="gsp-text"><strong>Overlap hours built in</strong> — our teams work hours that overlap with yours</div></div>
-    </div>
-    <div class="gs-direct">
-      <p>
-        <strong>richard@codetrainafrica.com</strong><br>
-        <strong>+233 545 792 397</strong> · WhatsApp available<br>
-        <strong>codetrain.africa</strong>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <div class="hero-tag fu">Codetrain · AI Engineering &amp; Delivery</div>
+      <h1 class="hero-h1 fu d1">
+        Build it. Deliver it.<br><em>Own the outcome.</em>
+      </h1>
+      <p class="hero-p fu d2">
+        Most companies know what they want to build. The gap is always who builds it — reliably, quickly, and without
+        the overhead of a full hire. Codetrain provides structured AI engineering teams that scope your project, deliver
+        it, and hand it over. Start in weeks, not months.
       </p>
+      <div class="hero-three fu d3">
+        <div class="h3">
+          <div class="h3-n">Build</div>
+          <div class="h3-title">AI tools, automations,<br>prototypes &amp; MVPs</div>
+          <p class="h3-desc">An idea, a backlog, a delayed project. We scope it, staff it, and deliver working output —
+            fixed price, defined timeline.</p>
+        </div>
+        <div class="h3">
+          <div class="h3-n">Transform</div>
+          <div class="h3-title">AI adoption across<br>your organisation</div>
+          <p class="h3-desc">Your organisation needs to adopt AI. We assess, build, deploy, and train your people — you
+            own everything, your way of working changes.</p>
+        </div>
+        <div class="h3">
+          <div class="h3-n">Hire</div>
+          <div class="h3-title">Place AI engineers<br>on your team</div>
+          <p class="h3-desc">Access trained engineers on a pilot, retainer, or permanent basis. Most clients hire people
+            whose work they have already seen.</p>
+        </div>
+      </div>
+      <div class="hero-ctas fu d4">
+        <a href="mailto:richard@codetrainafrica.com?subject=Codetrain — Let's talk" class="btn-gold">Book a call →</a>
+        <a href="#talent" class="btn-ghost">About our engineers</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS BAR -->
+  <div class="clients-bar">
+    <div class="cb-lbl">Employers we work with</div>
+    <div class="cb-names">
+      <span class="cb-name">Microsoft</span>
+      <span class="cb-name">Ecobank</span>
+      <span class="cb-name">mPharma</span>
+      <span class="cb-name">Hubtel</span>
+      <span class="cb-name">Stanchart</span>
+      <span class="cb-name">SAGE Germany</span>
+      <span class="cb-name">Infinitas Media</span>
+      <span class="cb-name">Big Viking Games</span>
+      <span class="cb-name">GIZ</span>
+      <span class="cb-name">Speedykom</span>
+    </div>
+    <div class="cb-stats">
+      <div class="cbs">
+        <div class="cbs-val">100+</div>
+        <div class="cbs-lbl">Employers in pipeline</div>
+      </div>
+      <div class="cbs">
+        <div class="cbs-val">89%</div>
+        <div class="cbs-lbl">Placement rate</div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- FOOTER -->
-<footer>
-  <a href="https://codetrain.africa" class="foot-logo">
-    <div class="foot-logo-mark"><span></span></div>
-    Codetrain Africa
-  </a>
-  <span class="foot-mid">AI Engineering &amp; Delivery · East Legon, Accra, Ghana · codetrain.africa</span>
-  <div class="foot-links">
-    <a href="https://codetrain.africa">Main site</a>
-    <a href="https://codetrainafrica.heiapply.com/application">For engineers</a>
-    <a href="mailto:richard@codetrainafrica.com">Contact</a>
+  <!-- WHAT YOU GET -->
+  <section class="what-you-get" id="services">
+    <div class="sec-tag">What we do</div>
+    <h2>Scoped. Staffed.<br>Delivered.</h2>
+    <p class="sec-lead">Three things companies engage Codetrain for. Each has a defined process, a clear outcome, and a
+      fixed engagement model. No open-ended hourly rates. No surprises.</p>
+    <div class="wyg-grid">
+      <div class="wyg-card">
+        <div class="wyg-num">01 · Build</div>
+        <div class="wyg-title">Build AI tools &amp; products</div>
+        <p class="wyg-desc">You have an idea, a backlog, or a specific AI problem to solve. We scope it, assign a
+          structured engineering team, and deliver it — fixed price, clear timeline, your IP.</p>
+        <div class="wyg-items">
+          <div class="wyg-item">AI tools, assistants, and chatbots</div>
+          <div class="wyg-item">Workflow and process automation</div>
+          <div class="wyg-item">MVPs, prototypes, and proof of concepts</div>
+          <div class="wyg-item">Full-stack applications and dashboards</div>
+          <div class="wyg-item">System integrations and APIs</div>
+        </div>
+      </div>
+      <div class="wyg-card">
+        <div class="wyg-num">02 · Transform</div>
+        <div class="wyg-title">Transform how your organisation uses AI</div>
+        <p class="wyg-desc">We come in, assess where AI creates value in your operations, build the systems, deploy
+          them, and develop your people to run them. Structured engagement, defined outcomes, staff training included.
+        </p>
+        <div class="wyg-items">
+          <div class="wyg-item">AI opportunity assessment and roadmap</div>
+          <div class="wyg-item">System build and deployment</div>
+          <div class="wyg-item">Staff and management training included</div>
+          <div class="wyg-item">90-day support and iteration</div>
+          <div class="wyg-item">You own everything we build</div>
+        </div>
+      </div>
+      <div class="wyg-card">
+        <div class="wyg-num">03 · Hire</div>
+        <div class="wyg-title">Place AI engineers on your team</div>
+        <p class="wyg-desc">Access Codetrain's pipeline of trained AI engineers — on a pilot basis, a retainer, or as a
+          permanent placement. Most employers start with a delivery engagement and hire when they've seen the work.</p>
+        <div class="wyg-items">
+          <div class="wyg-item">Delivery pilot — lowest risk entry point</div>
+          <div class="wyg-item">Monthly retainer — ongoing capacity</div>
+          <div class="wyg-item">Permanent placement — direct hire</div>
+          <div class="wyg-item">Sponsored cohort — trained for your stack</div>
+          <div class="wyg-item">700+ engineers trained, 89% placed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TALENT VALUE -->
+  <section class="talent" id="talent">
+    <div class="sec-tag">Why the work is reliable</div>
+    <h2 style="color:var(--white)">Engineers who contribute<br>from Week 1.</h2>
+    <p class="sec-lead">The reason our teams integrate quickly, communicate well, and deliver on defined milestones —
+      not by chance, but by design. Close to two years of structured preparation before they reach you.</p>
+    <div class="talent-inner">
+      <div class="talent-cards">
+        <div class="tc">
+          <div class="tc-title">Technical depth that shows up in Week 1</div>
+          <p class="tc-desc">Close to two years of hands-on AI and full-stack engineering — LLM APIs, production
+            deployment, workflow automation, data pipelines. Engineers who have shipped real systems, not completed
+            tutorials.</p>
+        </div>
+        <div class="tc">
+          <div class="tc-title">Professional values, embedded throughout</div>
+          <p class="tc-desc">Accountability, communication, meeting deadlines, working within a professional team —
+            these are built into the programme, not learned on the job. You do not spend the first six months teaching
+            them how to work.</p>
+        </div>
+        <div class="tc">
+          <div class="tc-title">Teachable and hungry</div>
+          <p class="tc-desc">Two years of structured feedback and peer review produces engineers who know how to take
+            direction, how to improve, and how to learn from experienced colleagues. They arrive with appetite, not ego.
+          </p>
+        </div>
+        <div class="tc">
+          <div class="tc-title">Teams available, not just individuals</div>
+          <p class="tc-desc">We can staff a 2–6 person delivery team within 2–3 weeks. Engineers who trained together,
+            know how to work together, and have already shipped projects as a unit. You get a functioning team, not
+            individuals who need to gel.</p>
+        </div>
+        <div class="tc">
+          <div class="tc-title">A global mindset — locally trained</div>
+          <p class="tc-desc">Trained in Ghana. Working with organisations in Ghana, across Africa, Germany, the UK, the
+            US, and Canada. Engineers who understand professional standards across markets and can represent your
+            organisation externally.</p>
+        </div>
+      </div>
+      <div>
+        <div class="talent-compare">
+          <div class="talent-compare-head">
+            <div class="tch-col">Typical hire</div>
+            <div class="tch-col">Codetrain engineer</div>
+          </div>
+          <div class="tcr">
+            <div class="tcc">3–6 month ramp before productive</div>
+            <div class="tcc good">Contributing from Week 1</div>
+          </div>
+          <div class="tcr">
+            <div class="tcc">Professional behaviour learned on the job</div>
+            <div class="tcc good">Professional values embedded in training</div>
+          </div>
+          <div class="tcr">
+            <div class="tcc">Single individual — needs team integration</div>
+            <div class="tcc good">Teams available — already work together</div>
+          </div>
+          <div class="tcr">
+            <div class="tcc">Certification-focused, not outcome-focused</div>
+            <div class="tcc good">Trained on real projects with real clients</div>
+          </div>
+          <div class="tcr">
+            <div class="tcc">Months to find and hire in a tight market</div>
+            <div class="tcc good">Delivery team starts in 2–3 weeks</div>
+          </div>
+          <div class="tcr">
+            <div class="tcc">Onboarding cost and time on your side</div>
+            <div class="tcc good">Pre-onboarded to professional standards</div>
+          </div>
+        </div>
+        <div class="talent-note">
+          <strong>The two-year difference.</strong> A short programme produces someone who has practised skills. Close
+          to two years at Codetrain produces someone who has developed them — through real projects, structured
+          feedback, and working with actual clients. That is the gap that shows up in the first week on the job.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVER -->
+  <section class="deliver" id="deliver">
+    <div class="sec-tag">Capabilities</div>
+    <div class="deliver-inner">
+      <div>
+        <h2>What we build<br>for you.</h2>
+        <p class="sec-lead" style="margin-bottom:2.5rem">Every project is scoped around a specific deliverable — not
+          time and materials. You know what you are getting before work begins.</p>
+        <div class="cap-group">
+          <div class="cap-group-title">AI &amp; Automation</div>
+          <div class="cap-items">
+            <div class="cap-item">Workflow and process automation</div>
+            <div class="cap-item">AI assistants and internal copilots</div>
+            <div class="cap-item">Document processing and analysis</div>
+            <div class="cap-item">Customer-facing AI tools and chatbots</div>
+          </div>
+        </div>
+        <div class="cap-group">
+          <div class="cap-group-title">Product Engineering</div>
+          <div class="cap-items">
+            <div class="cap-item">Full-stack web applications</div>
+            <div class="cap-item">MVP and prototype development</div>
+            <div class="cap-item">Feature backlog acceleration</div>
+            <div class="cap-item">Internal tools and dashboards</div>
+          </div>
+        </div>
+        <div class="cap-group">
+          <div class="cap-group-title">Data &amp; Infrastructure</div>
+          <div class="cap-items">
+            <div class="cap-item">Data pipeline development and structuring</div>
+            <div class="cap-item">AI readiness preparation</div>
+            <div class="cap-item">AI-enabled SaaS integrations</div>
+            <div class="cap-item">Analytics and reporting infrastructure</div>
+          </div>
+        </div>
+      </div>
+      <div class="deliver-right">
+        <div class="pilot-block">
+          <div class="pilot-block-title">Example starting points</div>
+          <p>Concrete use cases where a 4–8 week pilot delivers measurable value and validates the working relationship.
+          </p>
+          <div class="pilot-list">
+            <div class="pl">Automate internal reporting, approvals, or data entry using AI-enabled workflows</div>
+            <div class="pl">Build an internal knowledge assistant or customer-facing support tool trained on your data
+            </div>
+            <div class="pl">Accelerate a product backlog — assign a team to deliver a defined sprint</div>
+            <div class="pl">Build a working prototype of a new product or feature in 6–8 weeks</div>
+            <div class="pl">Structure and connect internal data into AI-ready pipelines</div>
+          </div>
+        </div>
+        <div class="stack-block">
+          <div class="stack-title">Tech stack</div>
+          <p class="stack-text">Python · JavaScript · TypeScript · React · Node.js · FastAPI · PostgreSQL · OpenAI API ·
+            Claude API · LangChain · Supabase · AWS · GCP · Docker. We integrate into your existing workflow and stack —
+            not the other way around.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE WORK -->
+  <section class="hiw" id="how">
+    <div class="sec-tag">How we work</div>
+    <div class="hiw-intro">
+      <div>
+        <h2>Start small.<br>Scale on results.</h2>
+        <p class="sec-lead">No long-term commitment required upfront. Every stage proceeds only once the previous stage
+          has demonstrated value. You stay in control throughout.</p>
+      </div>
+      <div style="padding-top:3.5rem">
+        <p>The most common path: a 4–8 week pilot on a defined problem, followed by an ongoing build or retainer, with
+          the option to hire when the relationship is validated. Engagements can combine and evolve — a pilot becomes a
+          retainer, a retainer converts to a hire.</p>
+      </div>
+    </div>
+    <div class="pathway">
+      <div class="ps hl">
+        <div class="ps-num">01 · Start here</div>
+        <div class="ps-title">Delivery Pilot</div>
+        <div class="ps-time">4–8 weeks</div>
+        <p class="ps-desc">Lowest risk entry. Small team (2–4 engineers), defined scope, measurable milestones. Validate
+          the model before committing to more. Codetrain handles coordination and quality throughout.</p>
+      </div>
+      <div class="ps">
+        <div class="ps-num">02 · If it works</div>
+        <div class="ps-title">Ongoing Build</div>
+        <div class="ps-time">2–6 months</div>
+        <p class="ps-desc">Expanded team on a longer project. Production-ready delivery. Fully integrated into your
+          engineering workflow. Dedicated project management and QA included.</p>
+      </div>
+      <div class="ps">
+        <div class="ps-num">03 · Long term</div>
+        <div class="ps-title">Retainer or Direct Hire</div>
+        <div class="ps-time">Ongoing</div>
+        <p class="ps-desc">Dedicated capacity on a monthly basis — or convert a proven engineer to your permanent team.
+          We handle the talent side. Your call, your timing. Both paths always available.</p>
+      </div>
+    </div>
+    <div class="pathway-note">
+      <strong>For international partners:</strong> Engaging Codetrain as a service provider means no work permit
+      applications, no local employment law complexity, no payroll obligations on your side. One service agreement. If
+      and when you want to hire directly, we guide that process too.
+    </div>
+  </section>
+
+  <!-- TRACK RECORD -->
+  <section class="track" id="track">
+    <div class="sec-tag">Track record</div>
+    <h2 style="color:var(--white)">Eight years.<br>Validated in production.</h2>
+    <p class="sec-lead">Not a new operation and not a pitch. Eight years of engineering delivery, audited financials,
+      and a client list that validated the model before we called it one.</p>
+    <div class="track-stats">
+      <div class="ts">
+        <div class="ts-val">700+</div>
+        <div class="ts-lbl">Engineers trained since 2017</div>
+      </div>
+      <div class="ts">
+        <div class="ts-val">89%</div>
+        <div class="ts-lbl">Industry placement rate</div>
+      </div>
+      <div class="ts">
+        <div class="ts-val">100+</div>
+        <div class="ts-lbl">Employers in active pipeline</div>
+      </div>
+      <div class="ts">
+        <div class="ts-val">16+</div>
+        <div class="ts-lbl">AI projects for international clients</div>
+      </div>
+    </div>
+    <div class="track-proof">
+      <div class="tp">
+        <div class="tp-title">GIZ — Deutsche Gesellschaft für Internationale Zusammenarbeit</div>
+        <p class="tp-desc">Germany's federal development agency selected Codetrain as the delivery partner for its AI
+          Talent Accelerator in Ghana. 50 AI engineers in structured training now. Selected on delivery outcomes, not a
+          pitch. GIZ does not choose on goodwill.</p>
+      </div>
+      <div class="tp">
+        <div class="tp-title">Engineers working across four continents</div>
+        <p class="tp-desc">Codetrain graduates are placed in permanent and contract roles with companies across Ghana,
+          Africa, Europe, and North America — hired on the strength of their work, not as a diversity initiative.</p>
+        <div class="tp-pills">
+          <span class="tp-pill">Microsoft</span>
+          <span class="tp-pill">Ecobank</span>
+          <span class="tp-pill">mPharma</span>
+          <span class="tp-pill">Hubtel</span>
+          <span class="tp-pill">SAGE Germany</span>
+          <span class="tp-pill">Infinitas Media</span>
+          <span class="tp-pill">Big Viking Games</span>
+          <span class="tp-pill">Stanchart</span>
+          <span class="tp-pill">Meqasa</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CASE STUDIES -->
+  <section class="cases" id="work">
+    <div class="sec-tag">Work we have delivered</div>
+    <h2>Projects that shipped.<br>Clients that came back.</h2>
+    <p class="sec-lead">A selection of delivery projects and partnerships — across product builds, AI engineering, and
+      talent programmes. Each one a real engagement with a defined outcome.</p>
+    <div class="cases-grid">
+
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-client">BlackinTech</div>
+          <div class="case-location">Berlin, Germany · Community &amp; Professional Network</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-type">Prototype build · Engineer placement</div>
+          <div class="case-headline">From working prototype to a hired Codetrain engineer building the full platform
+          </div>
+          <p class="case-story">BlackinTech needed to validate their product concept before committing to a full build.
+            Codetrain engineers delivered a working prototype — scoped, built, and shipped. BlackinTech tested it with
+            their community, validated the concept, and then hired a Codetrain engineer directly to build the full
+            platform.</p>
+          <div class="case-outcome"><strong>The outcome:</strong> A direct hire decision made on the back of work
+            already seen — not a speculative placement.</div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-client">eRateSync</div>
+          <div class="case-location">Los Angeles, USA · Education Technology</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-type">Full platform build · Award-winning delivery</div>
+          <div class="case-headline">An award-winning platform enabling education organisations to sync and manage
+            E-Rate compliance documents</div>
+          <p class="case-story">eRateSync needed a production-ready platform for US school districts managing complex
+            federal broadband funding compliance. Codetrain engineers built it end to end — from architecture to
+            deployment. The platform went to market and won an industry award for its impact on education organisations.
+          </p>
+          <div class="case-outcome"><strong>The outcome:</strong> A production platform built from Accra for a US market
+            — delivered to award-winning standard.</div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-client">GIZ — Deutsche Gesellschaft für Internationale Zusammenarbeit</div>
+          <div class="case-location">Germany / Ghana · International Development</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-type">Sponsored cohort · AI talent programme</div>
+          <div class="case-headline">Germany's federal development agency selects Codetrain to deliver Ghana's national
+            AI engineering programme</div>
+          <p class="case-story">GIZ selected Codetrain after extensive due diligence across curriculum quality,
+            employment outcomes, safeguarding, and financial management. 50 AI engineers are in structured training now.
+            GIZ pays the full cohort cost upfront — before training begins. The 89% graduate employment rate was a
+            decisive factor in the selection.</p>
+          <div class="case-outcome"><strong>The outcome:</strong> Full cohort funded and paid upfront. Live training
+            ongoing. GIZ does not select on potential — it selects on track record.</div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-client">Remotown</div>
+          <div class="case-location">Germany / Africa · HR &amp; Future of Work</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-type">Prototype build · HR system</div>
+          <div class="case-headline">A working employee leave request system prototype for a German-Africa HR platform
+          </div>
+          <p class="case-story">Remotown builds HR infrastructure for the Africa-Germany talent corridor. They needed a
+            functional prototype for an employee leave request management system — covering the full request-to-approval
+            workflow. Codetrain engineers delivered a working prototype on a defined scope and timeline, built correctly
+            for the specific operational context of cross-border employment.</p>
+          <div class="case-outcome"><strong>The outcome:</strong> Working prototype delivered. Remotown engineers
+            understood the Germany-Africa context before a line of code was written.</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="cases-note">
+      <span>These are four of 16+ delivery projects completed for international clients. Full case study documents
+        available on request.</span>
+      <a href="mailto:richard@codetrainafrica.com?subject=Case Studies Request"
+        style="color:var(--gold2);font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0">Request full
+        case studies →</a>
+    </div>
+  </section>
+
+  <!-- THE MODEL -->
+  <section class="model">
+    <div class="sec-tag">Why it works</div>
+    <div class="model-inner">
+      <div>
+        <div class="compare">
+          <div class="compare-head">
+            <div class="ch-col">Hiring from the market</div>
+            <div class="ch-col">Engaging Codetrain</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-cell">Months of searching, interviewing, negotiating</div>
+            <div class="compare-cell good">Delivery team starts within 2–3 weeks</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-cell">Long ramp before first productive output</div>
+            <div class="compare-cell good">Structured teams contributing from Week 1</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-cell">Permanent headcount commitment upfront</div>
+            <div class="compare-cell good">Start with a pilot — commit only when confident</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-cell">Individual hire — team integration takes time</div>
+            <div class="compare-cell good">Teams available who already work together</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-cell">Expensive agency fees or internal HR cost</div>
+            <div class="compare-cell good">One service agreement, defined scope</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-cell">Fit unknown until months into the job</div>
+            <div class="compare-cell good">Hire only work and people you have already seen</div>
+          </div>
+        </div>
+      </div>
+      <div class="model-right">
+        <h2>Start small.<br>Commit when confident.</h2>
+        <p class="sec-lead">Every engagement starts with a defined, low-risk pilot. You see the output before committing
+          to more. Scale what works. Stop what does not. Convert to a hire when you are sure.</p>
+        <div class="model-points">
+          <div class="mp">
+            <div class="mp-dot"></div>
+            <div class="mp-text"><strong>Start with a pilot.</strong> Small team, defined scope, 4–8 weeks. See the
+              output before committing to anything further.</div>
+          </div>
+          <div class="mp">
+            <div class="mp-dot"></div>
+            <div class="mp-text"><strong>Scale on results.</strong> Expand the engagement when the pilot works. If it
+              does not, you have a scoped project and a clear answer.</div>
+          </div>
+          <div class="mp">
+            <div class="mp-dot"></div>
+            <div class="mp-text"><strong>Hire when confident.</strong> Convert a proven engineer to a direct hire when
+              you know the work and the person. We handle the process.</div>
+          </div>
+          <div class="mp">
+            <div class="mp-dot"></div>
+            <div class="mp-text"><strong>Or stay on retainer.</strong> Dedicated capacity, predictable monthly cost, no
+              headcount commitment. Many clients prefer this indefinitely.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET STARTED -->
+  <div class="get-started" id="contact">
+    <div class="gs-left">
+      <div class="gs-tag">Start the conversation</div>
+      <h2 class="gs-h2">Tell us what<br><em>you need built.</em></h2>
+      <p class="gs-p">A rough brief is enough to start. We respond within 48 hours with a recommendation and, if there
+        is a fit, a scoped proposal — deliverables, timeline, fixed price. No obligation beyond that conversation.</p>
+      <div class="ccs">
+        <a href="mailto:richard@codetrainafrica.com?subject=Build Enquiry — Codetrain" class="cc">
+          <div class="cc-icon">⚡</div>
+          <div>
+            <div class="cc-label">I have something to build</div>
+            <div class="cc-sub">Tool, automation, prototype, MVP, or backlog</div>
+          </div>
+        </a>
+        <a href="mailto:richard@codetrainafrica.com?subject=AI Transformation — Codetrain" class="cc">
+          <div class="cc-icon">🔄</div>
+          <div>
+            <div class="cc-label">I want to adopt AI across my organisation</div>
+            <div class="cc-sub">Systems, staff training, ongoing support</div>
+          </div>
+        </a>
+        <a href="mailto:richard@codetrainafrica.com?subject=Talent Enquiry — Codetrain" class="cc">
+          <div class="cc-icon">👩‍💻</div>
+          <div>
+            <div class="cc-label">I want to hire AI engineers</div>
+            <div class="cc-sub">Pilot, retainer, or direct placement</div>
+          </div>
+        </a>
+        <a href="mailto:richard@codetrainafrica.com?subject=Codetrain — General Enquiry" class="cc">
+          <div class="cc-icon">💬</div>
+          <div>
+            <div class="cc-label">I am not sure yet — let's talk</div>
+            <div class="cc-sub">richard@codetrainafrica.com · +233 545 792 397</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="gs-right">
+      <div class="gs-tag">What to expect</div>
+      <h2 class="gs-h2" style="color:var(--white)">Simple from<br>your side.</h2>
+      <div class="gs-points">
+        <div class="gsp">
+          <div class="gsp-dot"></div>
+          <div class="gsp-text"><strong>Response within 48 hours</strong> — direct, not automated</div>
+        </div>
+        <div class="gsp">
+          <div class="gsp-dot"></div>
+          <div class="gsp-text"><strong>Scoped proposal in 5 working days</strong> — defined deliverables, fixed price
+          </div>
+        </div>
+        <div class="gsp">
+          <div class="gsp-dot"></div>
+          <div class="gsp-text"><strong>No long-term commitment required</strong> — every engagement starts with a pilot
+          </div>
+        </div>
+        <div class="gsp">
+          <div class="gsp-dot"></div>
+          <div class="gsp-text"><strong>You own everything built</strong> — all code, systems, documentation</div>
+        </div>
+        <div class="gsp">
+          <div class="gsp-dot"></div>
+          <div class="gsp-text"><strong>English throughout</strong> — management, documentation, handover</div>
+        </div>
+        <div class="gsp">
+          <div class="gsp-dot"></div>
+          <div class="gsp-text"><strong>Overlap hours built in</strong> — our teams work hours that overlap with yours
+          </div>
+        </div>
+      </div>
+      <div class="gs-direct">
+        <p>
+          <strong>richard@codetrainafrica.com</strong><br>
+          <strong>+233 545 792 397</strong> · WhatsApp available<br>
+          <strong>codetrain.africa</strong>
+        </p>
+      </div>
+    </div>
   </div>
-</footer>
 
+  <!-- FOOTER -->
+  <footer>
+    <a href="https://codetrain.africa" class="foot-logo">
+      <img src="codetrain-logo.png" alt="Codetrain Africa" class="foot-logo-img">
+    </a>
+    <span class="foot-mid">AI Engineering &amp; Delivery · East Legon, Accra, Ghana · codetrain.africa</span>
+    <div class="foot-links">
+      <a href="https://codetrain.africa">Main site</a>
+      <a href="https://codetrainafrica.heiapply.com/application">For engineers</a>
+      <a href="mailto:richard@codetrainafrica.com">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+      const mobileLinks = document.querySelectorAll('.mobile-links a');
+
+      function toggleMenu() {
+        menuToggle.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+        mobileMenuOverlay.classList.toggle('open');
+        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+      }
+
+      function closeMenu() {
+        menuToggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        mobileMenuOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      menuToggle.addEventListener('click', toggleMenu);
+      mobileMenuOverlay.addEventListener('click', closeMenu);
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+    });
+  </script>
 </body>
+
 </html>
